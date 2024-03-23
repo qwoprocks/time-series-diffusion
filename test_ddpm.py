@@ -1,9 +1,7 @@
+# Portions of code in this file were created with reference to:
+# https://github.com/lucidrains/denoising-diffusion-pytorch/blob/main/denoising_diffusion_pytorch/denoising_diffusion_pytorch.py
+# and
 # CMU 16-726 Learning-Based Image Synthesis / Spring 2024, Assignment 3
-#
-# Usage:
-# ======
-#    To test with the default hyperparamters:
-#       python test_ddpm.py
 
 import argparse
 import os

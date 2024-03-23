@@ -1,3 +1,8 @@
+# Portions of code in this file were created with reference to:
+# https://github.com/lucidrains/denoising-diffusion-pytorch/blob/main/denoising_diffusion_pytorch/denoising_diffusion_pytorch.py
+# and
+# CMU 16-726 Learning-Based Image Synthesis / Spring 2024, Assignment 3
+
 import torch
 from torch import einsum
 import torch.nn as nn
@@ -18,9 +23,6 @@ import numpy as np
 
 import cv2
 from diffusion_utils import *
-
-# Portions of code in this file were created with reference to:
-# https://github.com/lucidrains/denoising-diffusion-pytorch/blob/main/denoising_diffusion_pytorch/denoising_diffusion_pytorch.py
 
 # change this according to the training and testing files!
 # Variable does not autopopulate from opts, but needs to be same as opts.denoising_steps
