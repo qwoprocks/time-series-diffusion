@@ -3,3 +3,6 @@
 */**/*.csv
 */**/*.parquet
 
+*.pth
+
+__pycache__
