@@ -9,6 +9,8 @@ import torch.nn as nn
 from torch.nn import init
 import torch.nn.functional as F
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
+from torch_frft.frft_module import frft
+from torch_frft.dfrft_module import dfrft, dfrftmtx
 
 import math
 import random
@@ -57,6 +59,12 @@ class Unet(nn.Module):
         self.rnn_proj = nn.Sequential(
             nn.Conv1d(55, 1, 1),
             nn.Linear(256, 512)
+        )
+
+        self.frft_param = nn.Parameter(torch.tensor(1.25, dtype=torch.float32), requires_grad=True)
+        self.frft_proj = nn.Sequential(
+            nn.Conv1d(55, 1, 1),
+            nn.Linear(2036, 512)
         )
 
         dims = [init_dim, *map(lambda m: dim * m, dim_mults)]
@@ -127,6 +135,10 @@ class Unet(nn.Module):
             x_rnn_cond, (_, _) = self.rnn_layer(time_cond)
             x_rnn_cond = self.rnn_proj(x_rnn_cond).squeeze(dim=1)
             time_embed += x_rnn_cond
+
+            x_frft_cond = dfrft(time_cond, self.frft_param, dim=1)
+            x_frft_cond = self.frft_proj(x_frft_cond.real).squeeze(dim=1)
+            time_embed += x_frft_cond
 
         x = self.init_conv(x)
         r = x.clone()
