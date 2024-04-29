@@ -56,6 +56,7 @@ class Unet(nn.Module):
         )
         self.rnn_proj = nn.Sequential(
             nn.Conv1d(55, 1, 1),
+            nn.ReLU6(), # for training stability
             nn.Linear(256, 512)
         )
 
